@@ -1,0 +1,33 @@
+spring:
+  application:
+    name: ural-notifications
+  datasource:
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    properties:
+      hibernate:
+        generate_statistics: false
+        show_sql: true
+        check_nullability: true
+        hbm2ddl:
+          auto: validate
+        default_schema: ural_notifications
+
+  liquibase:
+    enabled: true
+    liquibase-schema: public
+    database-change-log-table: ural_notifications_log
+    database-change-log-lock-table: ural_notifications_lock
+    change-log: classpath:db/changelog-master.xml
+    default-schema: ural_notifications
+
+logging:
+  level:
+    root: info
+    org:
+      springframework: INFO
+      hibernate: INFO
+      apache:
+        tomcat:
+          util: WARN
