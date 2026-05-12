@@ -4,13 +4,15 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import ru.ural.notifications.dto.NotificationDto;
+import ru.ural.notifications.dto.contract.NotificationContractDto;
+
+import java.util.List;
 
 @RequestMapping("/api/notifications")
 @Tag(name = "Контроллер для работы с уведомлениями")
 public interface NotificationApi {
 
     @GetMapping
-    ResponseEntity<NotificationDto> getNotifications();
+    ResponseEntity<List<NotificationContractDto>> getNotifications();
 
 }

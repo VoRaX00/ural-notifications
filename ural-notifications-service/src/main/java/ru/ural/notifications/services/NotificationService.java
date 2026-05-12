@@ -2,11 +2,21 @@ package ru.ural.notifications.services;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
-import ru.ural.notifications.dto.NotificationRequest;
-import ru.ural.notifications.entities.Notification;
+import ru.ural.models.UserPrincipals;
+import ru.ural.notifications.dto.contract.NotificationContractDto;
+import ru.ural.notifications.dto.email.EmailNotificationRequest;
+import ru.ural.notifications.dto.contract.NotificationContractRequest;
+import ru.ural.notifications.entities.ContractNotification;
+import ru.ural.notifications.entities.EmailNotification;
 import ru.ural.notifications.mappers.NotificationMapper;
-import ru.ural.notifications.repositories.NotificationRepository;
+import ru.ural.notifications.repositories.ContractNotificationRepository;
+import ru.ural.notifications.repositories.EmailNotificationRepository;
+import ru.ural.utils.JwtUtils;
+
+import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -15,13 +25,15 @@ public class NotificationService {
 
     private final NotificationSender notificationSender;
 
-    private final NotificationRepository notificationRepository;
+    private final EmailNotificationRepository emailNotificationRepository;
+
+    private final ContractNotificationRepository contractNotificationRepository;
 
     private final NotificationMapper notificationMapper;
 
-    public void saveAndSendNotification(NotificationRequest notificationRequest) {
-        Notification notification = notificationMapper.toEntity(notificationRequest);
-        Notification savedNotification = notificationRepository.save(notification);
+    public void saveAndSendEmailNotification(EmailNotificationRequest emailNotificationRequest) {
+        EmailNotification notification = notificationMapper.toEntity(emailNotificationRequest);
+        EmailNotification savedNotification = emailNotificationRepository.save(notification);
 
         try {
             notificationSender.sendNotification(savedNotification);
@@ -30,8 +42,36 @@ public class NotificationService {
             log.error("Error while sending notification", e);
             savedNotification.setIsSending(false);
         } finally {
-            notificationRepository.save(savedNotification);
+            emailNotificationRepository.save(savedNotification);
         }
+    }
+
+    public void createNotification(NotificationContractRequest request) {
+        if (request.getUserUuids() == null || request.getUserUuids().isEmpty()) {
+            return;
+        }
+
+        ContractNotification notification = notificationMapper.toEntity(request);
+        contractNotificationRepository.save(notification);
+    }
+
+    public List<NotificationContractDto> getNotifications() {
+        UserPrincipals principals = getUser();
+        String uuid = Optional.ofNullable(principals)
+                .map(UserPrincipals::getUuid)
+                .orElse(null);
+
+        if (uuid == null) {
+            return List.of();
+        }
+
+        List<ContractNotification> notifications = contractNotificationRepository.findAllByUserUuidsContains(uuid);
+        return notificationMapper.toDto(notifications);
+    }
+
+    private UserPrincipals getUser() {
+        Authentication authentication = JwtUtils.getAuthentication();
+        return JwtUtils.getUser(authentication);
     }
 
 }

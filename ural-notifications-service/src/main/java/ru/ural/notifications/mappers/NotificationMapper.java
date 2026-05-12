@@ -3,16 +3,28 @@ package ru.ural.notifications.mappers;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
-import ru.ural.notifications.dto.NotificationDto;
-import ru.ural.notifications.dto.NotificationRequest;
-import ru.ural.notifications.entities.Notification;
+import ru.ural.notifications.dto.contract.NotificationContractDto;
+import ru.ural.notifications.dto.email.EmailNotificationDto;
+import ru.ural.notifications.dto.email.EmailNotificationRequest;
+import ru.ural.notifications.dto.contract.NotificationContractRequest;
+import ru.ural.notifications.entities.ContractNotification;
+import ru.ural.notifications.entities.EmailNotification;
+
+import java.util.List;
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface NotificationMapper {
 
     @Mapping(target = "isSending", ignore = true)
-    Notification toEntity(NotificationRequest notificationRequest);
+    EmailNotification toEntity(EmailNotificationRequest emailNotificationRequest);
 
-    NotificationDto toDto(Notification notification);
+    EmailNotificationDto toDto(EmailNotification emailNotification);
+
+    @Mapping(target = "isRead", ignore = true)
+    ContractNotification toEntity(NotificationContractRequest request);
+
+    NotificationContractDto toDto(ContractNotification notification);
+
+    List<NotificationContractDto> toDto(List<ContractNotification> notifications);
 
 }

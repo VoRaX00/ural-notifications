@@ -13,9 +13,11 @@ public class KafkaProperty {
     @Value(value = "${spring.kafka.bootstrap-servers}")
     private String bootstrapAddress;
 
-    private Integer groupId;
+    private String groupId;
 
-    private Topic notificationTopic;
+    private Topic notificationEmailTopic;
+
+    private Topic notificationContractTopic;
 
     @Setter
     @Getter

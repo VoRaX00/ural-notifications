@@ -38,8 +38,12 @@ spring:
 
 kafka:
   group-id: 1
-  notificationTopic:
+  notification-email-topic:
     name: ural-notifications-topic
+    partitions: 1
+    replicationFactor: 1
+  notification-contract-topic:
+    name: ural-contract-topic
     partitions: 1
     replicationFactor: 1
 

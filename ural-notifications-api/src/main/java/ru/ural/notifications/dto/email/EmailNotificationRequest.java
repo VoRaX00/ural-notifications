@@ -1,4 +1,4 @@
-package ru.ural.notifications.dto;
+package ru.ural.notifications.dto.email;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class NotificationRequest {
+public class EmailNotificationRequest {
 
     private String title;
 

@@ -32,4 +32,31 @@
         </createTable>
     </changeSet>
 
+    <changeSet id="rename table notifications on email_notifications" author="kerzhakov">
+        <renameTable oldTableName="notifications" newTableName="email_notifications"/>
+    </changeSet>
+
+    <changeSet id="create table contract_notifications" author="kerzhakov">
+        <createTable tableName="contract_notification">
+            <column name="id" type="BIGSERIAL">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="contract_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="title" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="body" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_read" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_uuids" type="JSONB">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
 </databaseChangeLog>

@@ -43,10 +43,14 @@ spring:
 
 kafka:
   group-id: ${KAFKA_GROUP_ID}
-  notification-topic:
-    name: ${URAL_NOTIFICATIONS_TOPIC_NAME}
-    partitions: ${URAL_NOTIFICATIONS_TOPIC_PARTITIONS}
-    replicationFactor: ${URAL_NOTIFICATIONS_TOPIC_REPLICATION_FACTOR}
+  notification-email-topic:
+    name: ${URAL_EMAIL_NOTIFICATIONS_TOPIC_NAME}
+    partitions: ${URAL_EMAIL_NOTIFICATIONS_TOPIC_PARTITIONS}
+    replicationFactor: ${URAL_EMAIL_NOTIFICATIONS_TOPIC_REPLICATION_FACTOR}
+  notification-contract-topic:
+    name: ${URAL_CONTRACT_NOTIFICATIONS_TOPIC_NAME}
+    partitions: ${URAL_CONTRACT_NOTIFICATIONS_TOPIC_PARTITIONS}
+    replicationFactor: ${URAL_CONTRACT_NOTIFICATIONS_TOPIC_REPLICATION_FACTOR}
 
 logging:
   level:

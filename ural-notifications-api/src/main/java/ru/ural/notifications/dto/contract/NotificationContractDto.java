@@ -1,15 +1,17 @@
-package ru.ural.notifications.dto;
+package ru.ural.notifications.dto.contract;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class NotificationDto {
+public class NotificationContractDto {
 
     private Long id;
 
@@ -17,6 +19,10 @@ public class NotificationDto {
 
     private String body;
 
-    private String email;
+    private List<String> userUuids;
+
+    private Long contractId;
+
+    private Boolean isRead;
 
 }

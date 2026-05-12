@@ -7,7 +7,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
-import ru.ural.notifications.entities.Notification;
+import ru.ural.notifications.entities.EmailNotification;
 
 @Slf4j
 @Service
@@ -18,7 +18,7 @@ public class NotificationSender {
 
     private final MailProperties mailProperties;
 
-    public void sendNotification(Notification notification) {
+    public void sendNotification(EmailNotification notification) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(notification.getEmail());
         message.setSubject(notification.getTitle());

@@ -32,8 +32,14 @@ public class KafkaConfig {
     }
 
     @Bean
-    public NewTopic notificationsTopic() {
-        var topic = kafkaProperty.getNotificationTopic();
+    public NewTopic notificationsEmailTopic() {
+        var topic = kafkaProperty.getNotificationEmailTopic();
+        return new NewTopic(topic.getName(), topic.getPartitions(), topic.getReplicationFactor());
+    }
+
+    @Bean
+    public NewTopic notificationsContractTopic() {
+        var topic = kafkaProperty.getNotificationContractTopic();
         return new NewTopic(topic.getName(), topic.getPartitions(), topic.getReplicationFactor());
     }
 

@@ -8,16 +8,24 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 import ru.ural.entities.BaseEntity;
 
-@Getter
+import java.util.ArrayList;
+import java.util.List;
+
 @Setter
+@Getter
 @Entity
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "notifications")
-public class Notification extends BaseEntity {
+@Table(name = "contract_notification")
+public class ContractNotification extends BaseEntity {
+
+    @Column(nullable = false)
+    private Long contractId;
 
     @Column(nullable = false)
     private String title;
@@ -25,11 +33,13 @@ public class Notification extends BaseEntity {
     @Column(nullable = false)
     private String body;
 
+    @Builder.Default
+    @JdbcTypeCode(SqlTypes.JSON)
     @Column(nullable = false)
-    private String email;
+    private List<String> userUuids = new ArrayList<>();
 
     @Builder.Default
     @Column(nullable = false)
-    private Boolean isSending = false;
+    private Boolean isRead = false;
 
 }
