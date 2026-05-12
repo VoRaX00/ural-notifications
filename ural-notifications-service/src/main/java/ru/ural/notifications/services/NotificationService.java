@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import ru.ural.exceptions.NotFoundException;
 import ru.ural.models.UserPrincipals;
 import ru.ural.notifications.dto.contract.NotificationContractDto;
 import ru.ural.notifications.dto.email.EmailNotificationRequest;
@@ -67,6 +69,14 @@ public class NotificationService {
 
         List<ContractNotification> notifications = contractNotificationRepository.findAllByUserUuidsContains(uuid);
         return notificationMapper.toDto(notifications);
+    }
+
+    @Transactional
+    public void markAsRead(Long id) {
+        ContractNotification notification = contractNotificationRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Уведомление с id: %d не найдено".formatted(id)));
+        notification.setIsRead(true);
+        contractNotificationRepository.save(notification);
     }
 
     private UserPrincipals getUser() {

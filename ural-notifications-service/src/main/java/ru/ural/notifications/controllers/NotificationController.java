@@ -22,4 +22,10 @@ public class NotificationController implements NotificationApi {
         return ResponseEntity.ok(notificationService.getNotifications());
     }
 
+    @Override
+    public ResponseEntity<Void> markAsRead(Long id) {
+        notificationService.markAsRead(id);
+        return ResponseEntity.ok().build();
+    }
+
 }
