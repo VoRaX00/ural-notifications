@@ -17,6 +17,18 @@
             <column name="id" type="BIGSERIAL">
                 <constraints primaryKey="true"/>
             </column>
+            <column name="title" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="body" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_sending" type="BOOLEAN" defaultValue="true">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
     </changeSet>
 

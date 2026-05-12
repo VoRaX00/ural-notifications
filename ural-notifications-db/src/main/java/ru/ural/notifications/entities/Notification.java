@@ -1,5 +1,6 @@
 package ru.ural.notifications.entities;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -17,4 +18,18 @@ import ru.ural.entities.BaseEntity;
 @AllArgsConstructor
 @Table(name = "notifications")
 public class Notification extends BaseEntity {
+
+    @Column(nullable = false)
+    private String title;
+
+    @Column(nullable = false)
+    private String body;
+
+    @Column(nullable = false)
+    private String email;
+
+    @Builder.Default
+    @Column(nullable = false)
+    private Boolean isSending = false;
+
 }

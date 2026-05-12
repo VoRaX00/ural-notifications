@@ -29,6 +29,27 @@ spring:
     change-log: classpath:db/changelog-master.xml
     default-schema: ural_notifications
 
+  kafka:
+    bootstrap-servers: localhost:11009
+  mail:
+    host: localhost
+    port: 1025
+    username: no-reply@ural.local
+    password:
+    properties:
+      mail:
+        smtp:
+          auth: false
+          starttls:
+            enable: false
+
+kafka:
+  group-id: 1
+  notification-topic:
+    name: ural-notifications-topic
+    partitions: 1
+    replicationFactor: 1
+
 logging:
   level:
     root: info

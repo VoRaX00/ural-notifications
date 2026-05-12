@@ -9,9 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class NotificationDto {
-
-    private Long id;
+public class NotificationRequest {
 
     private String title;
 
